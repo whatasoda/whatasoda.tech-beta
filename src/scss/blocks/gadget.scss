@@ -1,0 +1,30 @@
+.gadget {
+  &__block {
+    width: fit-content;
+    margin: 0 2px;
+    border: 2px solid;
+    border-radius: 3px;
+    display: flex;
+    flex-direction: row-reverse;
+    color: $black;
+    font-weight: bold;
+    @include FontAppearance(12, 18, 100);
+    &--twitter  { background-color: $twitter; border-color: $twitter; }
+    &--hatebu   { background-color: $hatebu;  border-color: $hatebu; }
+  }
+  &__count {
+    background-color: $banana-white;
+    padding: 4px 6px;
+  }
+  &__label {
+    width: 16px;
+    padding: 2px 4px;
+    font-size: 0;
+    color: $invisible;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    &--twitter  { background-image: url('/img/gadget/twitter.svg'); }
+    &--hatebu   { background-image: url('/img/gadget/hatebu.svg'); }
+  }
+}

@@ -1,0 +1,17 @@
+.link-list {
+  // &__block {}
+  &__title {
+    @include Montserrat;
+    @include FontAppearance(24, 24);
+  }
+  // &__list {}
+  &__item {
+    @include FontAppearance(14, 24);
+    margin-bottom: 4px;
+    &:before {
+      content: '･';
+      color: $banana-blue;
+    }
+  }
+  // &__anchor {}
+}

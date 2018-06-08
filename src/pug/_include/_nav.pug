@@ -1,0 +1,7 @@
+nav.header__nav.header-nav__block
+  ul.header-nav__list
+    each item in nav.list
+      li.header-nav__item
+        a.header-nav__anchor(href=item.url title=item.name.ja)
+          span.header-nav__label.en #{item.name.en}
+          span.header-nav__label.ja #{item.name.ja}

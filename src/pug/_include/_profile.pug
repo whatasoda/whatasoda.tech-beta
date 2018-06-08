@@ -1,0 +1,13 @@
+section.aside__profile.profile__block.with-shadow.aside-box
+  .profile__identity.box-header
+    img.profile__avatar(src='/img/avatar.png' alt=aside.profile.avatarAlt)
+    h3.profile__username #{aside.profile.name.en}
+    h4.profile__fullname #{aside.profile.name.ja}
+    ul.profile__social-list.social-list__block
+      each item in aside.profile.social
+        li.social-list__item(class=`social-list__item--${item.type}`)
+          a.social-list__anchor(href=item.url title=`${item.type}: ${item.name}` target='_blank')
+            i.social-list__icon(class=`fa fa-${item.icon}` aria-hidden)
+            span.social-list__label #{item.label}
+  p.profile__bio
+    +multiLineText(aside.profile.bio)

@@ -1,0 +1,133 @@
+.article {
+  &__block {
+    margin    : 30px 25px;
+    padding   : 20px 15px;
+    @include maxScreen($bp-wide) {
+      margin  : 20px 5px;
+    }
+  }
+  // &__header {}
+  &__title {
+    margin-bottom : 0.5em;
+    @include FontAppearance(36, 48);
+  }
+  &__thumbnail-box { width: 100%; }
+  &__thumbnail { width: 100%; }
+  &__update {
+    padding     : 10px 0;
+    text-align  : right;
+    color       : $banana-gray;
+    @include FontAppearance(14, 14);
+  }
+  &__gadgets {
+    margin-top      : 8px;
+    flex-shrink     : 0;
+    display         : flex;
+    justify-content : flex-end;
+  }
+  &__old {
+    border            : 3px solid $banana-orange;
+    background-color  : $banana-pink;
+    color             : $banana-brown;
+    text-align        : center;
+    @include FontAppearance(16, 50);
+  }
+  &__content {
+    padding : 10px 0;
+    @include FontAppearance(18, 30);
+    h1, h2, h3, h4, h5, h6 {
+      padding-left  : 6px;
+      border-left   : 4px solid $banana-orange;
+      border-bottom : 2px solid $banana-gray;
+    }
+    h1, h2, h3 {
+      margin: 16px 0 12px;
+    }
+    h1, h2 { @include FontAppearance(32, 48); }
+    h3 { @include FontAppearance(28, 42); }
+    h4 { @include FontAppearance(24, 36); }
+    h5, h6 {
+      margin  : 6px 0 10px;
+      @include FontAppearance(18, 27);
+    }
+
+    ul, ol {
+      padding-left  : 30px;
+      margin-bottom : 30px;
+      ul, ol {
+        margin-bottom: 0;
+      }
+    }
+
+    ul li {
+      list-style-type     : disc;
+      li {
+        list-style-type   : circle;
+        li {
+          list-style-type : square;
+        }
+      }
+    }
+    ol li {
+      list-style-type: decimal;
+    }
+
+    code {
+      background-color: $banana-beige;
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+
+    pre.has-code {
+      position          : relative;
+      overflow          : hidden;
+      margin            : 16px 10px;
+      padding-left      : 4em;
+      border-radius     : 4px;
+      color             : $banana-white;
+      border            : 2px solid $banana-blue;
+      background-color  : $banana-black;
+      @include FontAppearance(14, 18, 0);
+      &> code {
+        background-color: $banana-black;
+        padding         : 18px;
+        border-radius   : 0;
+        overflow        : scroll;
+        display         : block;
+        margin          : 0 -18px -18px 0;
+        border-left     : 1px solid $banana-gray;
+        .line-counter {
+          position        : absolute;
+          top             : 0;
+          bottom          : 0;
+          left            : 0;
+          width           : 2em;
+          border-radius   : inherit;
+          padding         : inherit;
+          padding-left    : 0.5em;
+          padding-right   : 0.5em;
+          background-color: $banana-black;
+          color           : $banana-pink;
+          text-align      : right;
+          counter-reset   : codePre;
+        }
+        .line-number {
+          &:before {
+            counter-increment: codePre;
+            content: counter(codePre);
+          }
+        }
+      }
+      @include pseudoBlockAfter {
+        position  : absolute;
+        right     : 0;
+        top       : 0;
+        bottom    : 0;
+        width     : 0.75em;
+        background: linear-gradient(to right, $invisible, $banana-pink);
+      }
+    }
+
+  }
+  // &__footer {}
+}

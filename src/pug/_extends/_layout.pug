@@ -1,0 +1,12 @@
+include /_mixin/*
+doctype html
+html(lang='ja' class=isTop ? 'top' : 'sub')
+  include /_include/_head
+  body
+    include /_include/_header
+    
+    main.main__block
+      block content
+      include /_include/_aside
+      
+    include /_include/_footer

@@ -1,0 +1,18 @@
+.footer {
+  &__block {
+    position: sticky;
+    bottom: 0;
+    &:before {
+      left: 0;
+      right: 0;
+      bottom: 0;
+    }
+  }
+  &__copyright {
+    padding: 10px 0;
+    width: 100%;
+    text-align: center;
+    @include FontAppearance(14, 14);
+    color: darken($banana-beige, 30%);
+  }
+}

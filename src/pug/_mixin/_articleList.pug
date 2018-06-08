@@ -1,0 +1,23 @@
+mixin articleList(list)
+  section.main__article-list.article-list__block(
+    class=`main__article-list--${list.type}`
+  )
+    h2.article-list__headline
+      | #{list.headline}
+    ul.article-list__list
+      each item in list.articles
+        li.article-list__item.article-item__block.with-shadow
+          a.article-item__headline-anchor(href=item.url title=item.title)
+            .article-item__thumbnail
+              img(src=item.thumbnail alt=item.title)
+            h3.article-item__headline #{item.title}
+          ul.article-item__categories
+            each category in item.categories
+              li.article-item__category
+                a.article-item__category-anchor(href=category.url) #{category.name}
+          +gadgets('article-item')
+    if list.more
+      a.article-list__more(href='/articles') MORE
+    .article-list__ad
+      include /_include/_ad
+  

@@ -1,0 +1,18 @@
+@mixin pseudoBlcokCommon {
+  content : '.';
+  color   : $invisible;
+  display : block;
+  @content;
+}
+
+@mixin pseudoBlockBefore {
+  &::before {
+    @include pseudoBlcokCommon { @content; };
+  }
+}
+
+@mixin pseudoBlockAfter {
+  &::after {
+    @include pseudoBlcokCommon { @content; };
+  }
+}

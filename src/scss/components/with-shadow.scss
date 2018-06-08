@@ -1,0 +1,22 @@
+.with-shadow {
+  position: relative;
+  z-index: $z-shadow-box;
+  @include pseudoBlockBefore {
+    position: absolute;
+    top     : -3px;
+    bottom  : -7px;
+    left    : -3px;
+    right   : -7px;
+    background-color: $shadow;
+    z-index: -1;
+  }
+  @include pseudoBlockAfter {
+    position: absolute;
+    top     : 0;
+    bottom  : 0;
+    left    : 0;
+    right   : 0;
+    z-index: -1;
+    background-color: $banana-white;
+  }
+}

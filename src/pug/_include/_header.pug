@@ -1,0 +1,9 @@
+header.header__block
+  .header__main
+    a.header__anchor(href='/')
+      h1.header__title
+        img.header__logo(src=header.logo alt=header.title)
+    p.header__description
+      +multiLineText(header.desc)
+  include /_include/_nav
+  

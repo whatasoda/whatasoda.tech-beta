@@ -1,0 +1,13 @@
+mixin asideLinkList(list)
+  .aside__link-list.link-list__block.with-shadow.aside-box
+    h3.link-list__title.box-header
+      | #{list.title}
+    ul.link-list__list
+      each item in list.items
+        li.link-list__item
+          a.link-list__anchor(href=item.url title=item.text)
+            | #{item.text}
+            if typeof item.count === 'number'
+              | [#{item.count}]
+        
+    

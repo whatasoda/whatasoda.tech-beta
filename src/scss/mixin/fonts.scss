@@ -1,0 +1,17 @@
+@mixin Montserrat {
+  font-family: 'Montserrat', sans-serif;
+}
+
+@mixin NotoSansJP {
+  font-family: 'Noto Sans JP', sans-serif;
+}
+
+@mixin UbuntuMono {
+  font-family: 'Ubuntu Mono', 'Noto Sans JP', monospace;
+}
+
+@mixin FontAppearance ($size, $line-height, $tracking: 50) {
+  font-size     : ($size        / 10)   + 0rem;
+  line-height   : ($line-height / $size);
+  letter-spacing: ($tracking    / 1000) + 0em;
+}

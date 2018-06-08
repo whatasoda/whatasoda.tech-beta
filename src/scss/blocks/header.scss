@@ -1,0 +1,27 @@
+.header {
+  &__block {
+    position  : sticky;
+    z-index   : 300;
+    top       : -315px;
+  }
+  &__main {
+    height          : 315px;
+    padding         : 20px 0;
+    box-sizing      : border-box;
+    background-color: $banana-blue;
+    display         : flex;
+    align-items     : flex-end;
+  }
+  // &__title {}
+  &__logo {
+    width   : 280px;
+    margin  : 0 30px;
+  }
+  &__description {
+    padding : 20px 0;
+    color   : $banana-beige;
+    height  : fit-content;
+    @include FontAppearance(18, 48);
+  }
+  // &__nav {}
+}

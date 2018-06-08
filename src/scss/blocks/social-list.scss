@@ -1,0 +1,23 @@
+.social-list {
+  &__block {
+    display: flex;
+    justify-content: space-between;
+  }
+  &__item {
+    &--mail     { color: $mail }
+    &--twitter  { color: $twitter }
+    &--github   { color: $github }
+  }
+  &__anchor {
+    display: block;
+    color: inherit;
+    @include FontAppearance(48, 48);
+  }
+  &__icon {
+    display: block;
+  }
+  &__label {
+    position: absolute;
+    @include FontAppearance(0, 0);
+  }
+}

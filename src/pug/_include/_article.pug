@@ -1,0 +1,15 @@
+article.main__article.article__block.with-shadow
+  .article__header.box-header
+    h1.article__title #{article.title.replace('\n', '')}
+    .article__thumbnail-box
+      img.article__thumbnail(src=article.thumbnail alt=article.title)
+    p.article__update 最終更新: #{article.update}
+    +gadgets('article')
+  if article.isOld
+    p.article__old
+      | この記事は更新から1年以上が経っています。
+  .article__content
+    .
+      !{article.content}
+  .article__footer
+    +gadgets('article')

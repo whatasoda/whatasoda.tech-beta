@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "strict": true,
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "baseUrl": ".",
+    "paths": {
+      "!data/*": ["src/data/*"]
+    },
+    "typeRoots": [
+      "node_modules/@types",
+      "src/types"
+    ]
+  },
+  "exclude": [
+    "node_modules"
+  ]
+}
