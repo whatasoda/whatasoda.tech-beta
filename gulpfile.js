@@ -76,7 +76,10 @@ gulp.task('pug', () => {
       basedir: path.join(__dirname, PATH.pug.baseDir),
       plugins: [ pugGlob() ],
     }))
-  return (isDev ? common : common.pipe(attrPrefixer(attrPrefixer.prefix('/whatasoda.tech-beta', ['href', 'src']))))
+  return (isDev ? common : common.pipe(attrPrefixer(
+    attrPrefixer.prefix('/whatasoda.tech-beta', ['href', 'src'])
+      .map(rule => ({ ...rule, filter(value) { return !value.startsWith('http') } }))
+  )))
     .pipe(gulp.dest(PATH.pug.dist))
 })
 
