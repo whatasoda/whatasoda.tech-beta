@@ -1,22 +1,25 @@
-const gulp        = require('gulp')
-const server      = require('browser-sync').create()
-const plumber     = require('gulp-plumber')
-const path        = require('path')
-const data        = require('gulp-data')
-const cp          = require('child_process')
+const gulp          = require('gulp')
+const server        = require('browser-sync').create()
+const plumber       = require('gulp-plumber')
+const path          = require('path')
+const data          = require('gulp-data')
+const cp            = require('child_process')
 
-const sass        = require('gulp-sass')
-const sassGlob    = require('gulp-sass-glob')
+const sass          = require('gulp-sass')
+const sassGlob      = require('gulp-sass-glob')
 
-const pug         = require('gulp-pug')
-const pugGlob     = require('pug-include-glob')
+const pug           = require('gulp-pug')
+const pugGlob       = require('pug-include-glob')
+const attrPrefixer  = require('gulp-html-attr-xxxfixer')
 
-const image       = require('gulp-image')
+const image         = require('gulp-image')
+
+const isDev = process.env.NODE_ENV !== 'docs'
 
 const PATH = {
   root: {
     src : './src',
-    dist: './dist'
+    dist: isDev ? './dist' : './docs'
   },
   data: {},
   scss: {},
@@ -59,16 +62,17 @@ gulp.task('scss', () => (
 ))
 
 
-gulp.task('pug', () => (
-  gulp.src(PATH.pug.src)
+gulp.task('pug', () => {
+  const common = gulp.src(PATH.pug.src)
     .pipe(plumber())
     .pipe(data(dataFunc))
     .pipe(pug({
       basedir: path.join(__dirname, PATH.pug.baseDir),
       plugins: [ pugGlob() ],
     }))
+  return (isDev ? common : common.pipe(attrPrefixer(attrPrefixer.prefix('/whatasoda.tech-beta', ['href', 'src']))))
     .pipe(gulp.dest(PATH.pug.dist))
-))
+})
 
 gulp.task('img', () => (
   gulp.src(PATH.img.src)
