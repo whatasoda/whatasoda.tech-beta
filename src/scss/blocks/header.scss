@@ -2,25 +2,35 @@
   &__block {
     position  : sticky;
     z-index   : 300;
-    top       : -315px;
+    top       : -220px;
+    @include maxScreen ($bp-midd) {
+      top       : -370px;
+    }
   }
   &__main {
-    height          : 315px;
+    height          : 220px;
     padding         : 20px 0;
     box-sizing      : border-box;
     background-color: $banana-blue;
     display         : flex;
     align-items     : flex-end;
+    @include maxScreen ($bp-midd) {
+      flex-direction  : column;
+      align-items     : center;
+      text-align      : center;
+      height          : 370px;
+    }
   }
   // &__title {}
   &__logo {
-    width   : 280px;
-    margin  : 0 30px;
+    width: 170px;
+    margin  : 0 25px;
   }
   &__description {
-    padding : 20px 0;
-    color   : $banana-beige;
-    height  : fit-content;
+    padding     : 20px 0;
+    color       : $banana-beige;
+    height      : fit-content;
+    white-space : nowrap;
     @include FontAppearance(18, 48);
   }
   // &__nav {}

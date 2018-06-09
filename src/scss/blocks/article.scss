@@ -81,41 +81,42 @@
     pre.has-code {
       position          : relative;
       overflow          : hidden;
+      width             : calc(100% - 32px);
       margin            : 16px 10px;
-      padding-left      : 4em;
       border-radius     : 4px;
       color             : $banana-white;
       border            : 2px solid $banana-blue;
       background-color  : $banana-black;
       @include FontAppearance(14, 18, 0);
+      &> * {
+        padding : 12px;
+
+      }
       &> code {
         background-color: $banana-black;
-        padding         : 18px;
         border-radius   : 0;
-        overflow        : scroll;
+        position        : absolute;
+        left            : 0;
+        right           : 0;
+        margin-left     : 4em;
         display         : block;
-        margin          : 0 -18px -18px 0;
+        overflow: auto;
         border-left     : 1px solid $banana-gray;
-        .line-counter {
-          position        : absolute;
-          top             : 0;
-          bottom          : 0;
-          left            : 0;
-          width           : 2em;
-          border-radius   : inherit;
-          padding         : inherit;
-          padding-left    : 0.5em;
-          padding-right   : 0.5em;
-          background-color: $banana-black;
-          color           : $banana-pink;
-          text-align      : right;
-          counter-reset   : codePre;
-        }
-        .line-number {
-          &:before {
-            counter-increment: codePre;
-            content: counter(codePre);
-          }
+      }
+      .line-counter {
+        width           : 2em;
+        border-radius   : inherit;
+        padding-left    : 0.5em;
+        padding-right   : 0.5em;
+        display         : block;
+        color           : $banana-pink;
+        text-align      : right;
+        counter-reset   : codePre;
+      }
+      .line-number {
+        &:before {
+          counter-increment: codePre;
+          content: counter(codePre);
         }
       }
       @include pseudoBlockAfter {

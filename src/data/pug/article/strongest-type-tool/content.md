@@ -193,6 +193,19 @@ body { display: none; } /* コメント */
 <?php if (is_tag()){ $posts = query_posts($query_string . '&showposts=20'); } ?>
 ```
 
+```ts
+const route =
+  < T extends {[key in K]: (...args: any[]) => any},
+    K extends keyof T | 'default',
+  >(
+    promise : Promise<T>,
+    key     : K = 'default' as K
+  ) => (
+    async (...args: any[]) => (await promise)[key](...args)
+  ) as T[K]
+export default route
+```
+
 ## 取り消し線
 
 ~~取り消し線（GFM記法）~~  

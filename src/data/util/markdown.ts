@@ -52,12 +52,17 @@ export default async (markdown: string) => {
     const lang      = parseLangage($node.attr('class') || '')
     const codeText  = $node.html()
     if (!codeText) return;
-    if (!lang) return $node.text(applyLineCounter(entities.encode(codeText)))
+    if (!lang) {
+      const content = entities.encode(codeText)
+      $parent.append(lineCounter(content))
+      return $node.text(content)
+    }
     try {
       const highlighted = highlight(lang, codeText)
       $node.html(highlighted.value)
       const content = node.children.map(hljsRecursive).join('')
-      $node.text(applyLineCounter(content))
+      $parent.append(lineCounter(content))
+      return $node.text(content)
     } catch (e) {
       console.log(e)
       return;
@@ -74,7 +79,7 @@ const parseLangage = (className: string) => {
 }
 
 
-const applyLineCounter = (content: string) =>
-  content + `<span class="line-counter">${
+const lineCounter = (content: string) =>
+  `<span class="line-counter">${
     '<span class="line-number"></span>\n'.repeat((content.match(/\n/g) || []).length + 1)
   }</span>`
