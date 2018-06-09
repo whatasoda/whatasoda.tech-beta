@@ -25,6 +25,7 @@ const PATH = {
   scss: {},
   pug: {},
   img: {},
+  fonts: {},
 }
 const i = path => `!${path}` // ignore
 
@@ -53,6 +54,11 @@ PATH.img.dist     = path.join(PATH.root.dist,   'img')
 PATH.img.src      = path.join(PATH.img.baseDir, '**/*')
 PATH.img.watch    = path.join(PATH.img.baseDir, '**/*')
 
+PATH.fonts.baseDir  = path.join(PATH.root.src,    'fonts')
+PATH.fonts.src      = path.join(PATH.fonts.baseDir, '**/*')
+PATH.fonts.dist     = path.join(PATH.root.dist,   'fonts')
+
+
 gulp.task('scss', () => (
   gulp.src(PATH.scss.src)
     .pipe(plumber())
@@ -79,6 +85,11 @@ gulp.task('img', () => (
     .pipe(plumber())
     .pipe(image())
     .pipe(gulp.dest(PATH.img.dist))
+))
+
+gulp.task('fonts', () => (
+  gulp.src(PATH.fonts.src)
+    .pipe(gulp.dest(PATH.fonts.dist))
 ))
 
 const DataReloaders = {}
@@ -125,6 +136,7 @@ gulp.task('default', gulp.series(
     'scss',
     'pug',
     'img',
+    'fonts',
     'browserSync'
   )
 ))
