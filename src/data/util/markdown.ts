@@ -1,75 +1,31 @@
-import { highlight } from 'highlight.js'
-import marked   = require('marked')
-import cheerio  = require('cheerio')
+import highlightjs  = require('highlight.js')
+import marked       = require('marked')
+import jsdom        = require('jsdom')
 import HTMLEntities = require('html-entities')
 
+const { JSDOM }     = jsdom
+const { Renderer }  = marked
+
 const entities = new HTMLEntities.AllHtmlEntities()
-const completelyEncode = (toEncode: string) =>
-  entities.encode(entities.encode(toEncode))
+const renderer = new Renderer()
+renderer.code = (code, lang) => {
+  const validLang   = !!(lang && highlightjs.getLanguage(lang))
+  const highlighted = validLang ? highlightjs.highlight(lang, code).value : entities.encode(code)
+  const counter     = lineCounter(highlighted)
+  return `<pre class="has-code"><code class="hljs ${lang}">${highlighted}</code>${counter}</pre>`
+}
+marked.setOptions({ renderer })
+
 
 export default async (markdown: string) => {
   const html = await new Promise<string>((resolve, reject) =>
     marked(markdown, (err, html) => err ? reject(err) : resolve(html))
   )
 
-  const $ = cheerio.load(html, {
-    normalizeWhitespace: true,
-    decodeEntities: false
-  })
+  const { document } = new JSDOM(html).window
 
-  const hljsRecursive = (node: CheerioElement): string => {
-    if (!(node && node.parent)) return ''
-    if (node.type === 'text') return entities.encode(node.nodeValue)
-    if (node.type === 'tag') {
-      const isHLJS = $(node).is('[class*=hljs]')
-      if (isHLJS) {
-        const conetnt = node.childNodes.map(hljsRecursive).join('')
-        return $.html($(node).text(conetnt))
-      }
-      if (!isHLJS) {
-        if (!node.childNodes.length) return entities.encode($.html(node))
-        const content = node.childNodes.map(hljsRecursive).join('')
-        const raw   = [...$.html(node)]
-        const empty = [...$.html($(node).empty())]
-        const insertAt = empty.findIndex((char, index) => char !== raw[index])
-        if (insertAt === -1) return ''
-        const encoded = empty.map(char => entities.encode(char || ''))
-        encoded.splice(insertAt, 0, content)
-        return encoded.join('')
-      }
-    }
-    return ''
-  }
 
-  $('code').each((index, node) => {
-    if (!(node && node.parent)) return;
-    const $node   = $(node)
-    const $parent = $node.parent()
-    if (!$parent.is('pre')) return $node.text(entities.encode($node.html() || ''))
-
-    $parent.addClass('has-code')
-
-    const lang      = parseLangage($node.attr('class') || '')
-    const codeText  = $node.html()
-    if (!codeText) return;
-    if (!lang) {
-      const content = entities.encode(codeText)
-      $parent.append(lineCounter(content))
-      return $node.text(content)
-    }
-    try {
-      const highlighted = highlight(lang, codeText)
-      $node.html(highlighted.value)
-      const content = node.children.map(hljsRecursive).join('')
-      $parent.append(lineCounter(content))
-      return $node.text(content)
-    } catch (e) {
-      console.log(e)
-      return;
-    }
-  })
-
-  return $('body').html() || ''
+  return document.body.innerHTML
 }
 const EXTRACT_LANGAGE = /(?:\s|^)language-(.*?)(?=\s|$)/
 const parseLangage = (className: string) => {

@@ -3,14 +3,13 @@ const server        = require('browser-sync').create()
 const plumber       = require('gulp-plumber')
 const path          = require('path')
 const data          = require('gulp-data')
-const cp            = require('child_process')
+const urlPrefixer  = require('gulp-url-prefixer')
 
 const sass          = require('gulp-sass')
 const sassGlob      = require('gulp-sass-glob')
 
 const pug           = require('gulp-pug')
 const pugGlob       = require('pug-include-glob')
-const attrPrefixer  = require('gulp-html-attr-xxxfixer')
 
 const image         = require('gulp-image')
 
@@ -59,27 +58,31 @@ PATH.fonts.src      = path.join(PATH.fonts.baseDir, '**/*')
 PATH.fonts.dist     = path.join(PATH.root.dist,   'fonts')
 
 
-gulp.task('scss', () => (
-  gulp.src(PATH.scss.src)
-    .pipe(plumber())
-    .pipe(sassGlob())
-    .pipe(sass())
+gulp.task('scss', () => {
+  const common =
+    gulp.src(PATH.scss.src)
+      .pipe(plumber())
+      .pipe(sassGlob())
+      .pipe(sass())
+  return (isDev ? common : common.pipe(urlPrefixer.css({
+    prefix: '/whatasoda.tech-beta'
+  })))
     .pipe(gulp.dest(PATH.scss.dist))
-))
+})
 
 
 gulp.task('pug', () => {
-  const common = gulp.src(PATH.pug.src)
-    .pipe(plumber())
-    .pipe(data(dataFunc))
-    .pipe(pug({
-      basedir: path.join(__dirname, PATH.pug.baseDir),
-      plugins: [ pugGlob() ],
-    }))
-  return (isDev ? common : common.pipe(attrPrefixer(
-    attrPrefixer.prefix('/whatasoda.tech-beta', ['href', 'src'])
-      .map(rule => ({ ...rule, filter(value) { return !value.startsWith('http') } }))
-  )))
+  const common =
+    gulp.src(PATH.pug.src)
+      .pipe(plumber())
+      .pipe(data(dataFunc))
+      .pipe(pug({
+        basedir: path.join(__dirname, PATH.pug.baseDir),
+        plugins: [ pugGlob() ],
+      }))
+  return (isDev ? common : common.pipe(urlPrefixer.html({
+    prefix: '/whatasoda.tech-beta'
+  })))
     .pipe(gulp.dest(PATH.pug.dist))
 })
 

@@ -84,15 +84,14 @@
       width             : calc(100% - 32px);
       margin            : 16px 10px;
       border-radius     : 4px;
-      color             : $banana-white;
       border            : 2px solid $banana-blue;
       background-color  : $banana-black;
       @include FontAppearance(14, 18, 0);
       &> * {
         padding : 12px;
-
       }
       &> code {
+        color           : $banana-white;
         background-color: $banana-black;
         border-radius   : 0;
         position        : absolute;
